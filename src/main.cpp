@@ -16,6 +16,8 @@ namespace {
     Settings settings;
     HTTPS https(settings);
     Misskey misskey(settings, https);
+
+    Note* current_note = nullptr;
 }
 
 void setup()
@@ -52,19 +54,45 @@ void loop()
 {
     M5.update();
 
-    if (M5.BtnB.wasPressed())
+    if (M5.BtnA.wasPressed())
     {
-        Note* note = misskey.get_home_timeline();
+        Note* next_note = misskey.get_after_note(current_note);
+        delete current_note;
+        current_note = next_note;
 
         M5.Lcd.clear();
         M5.Lcd.setCursor(0, 0);
-        if (note != nullptr)
+        if (current_note != nullptr)
         {
-            note->show();
-            delete note;
+            current_note->show();
         }
+    }
 
-        delay(500);
+    if (M5.BtnB.wasPressed())
+    {
+        delete current_note;
+        current_note = misskey.get_home_timeline();
+
+        M5.Lcd.clear();
+        M5.Lcd.setCursor(0, 0);
+        if (current_note != nullptr)
+        {
+            current_note->show();
+        }
+    }
+
+    if (M5.BtnC.wasPressed())
+    {
+        Note* next_note = misskey.get_before_note(current_note);
+        delete current_note;
+        current_note = next_note;
+
+        M5.Lcd.clear();
+        M5.Lcd.setCursor(0, 0);
+        if (current_note != nullptr)
+        {
+            current_note->show();
+        }
     }
 
     delay(50);

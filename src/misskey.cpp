@@ -34,6 +34,11 @@ Note* Misskey::get_home_timeline()
 
 Note* Misskey::get_before_note(Note* note)
 {
+    if (note == nullptr)
+    {
+        return nullptr;
+    }
+
     _json_request.clear();
 
     _json_request["i"] = _settings.get_api_token();
@@ -53,6 +58,11 @@ Note* Misskey::get_before_note(Note* note)
 
 Note* Misskey::get_after_note(Note* note)
 {
+    if (note == nullptr)
+    {
+        return nullptr;
+    }
+
     _json_request.clear();
 
     _json_request["i"] = _settings.get_api_token();
