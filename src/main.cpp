@@ -6,19 +6,20 @@
 #include <M5Unified.h>
 #include <ArduinoJson.h>
 
+#include "settings.hpp"
+
 namespace {
     constexpr const char* misskey_host = "https://misskey.io";
     constexpr const char* misskey_api = "/api";
     constexpr const char* misskey_api_notes_timeline = "/notes/timeline";
 
-    StaticJsonDocument<1024> json_settings;
+    Settings settings;
+
     StaticJsonDocument<4096> json_request;
     StaticJsonDocument<16384> json_response;
 
     String content_type_json("application/json");
     String target_page_notes_timeline = String(misskey_api) + misskey_api_notes_timeline;
-
-    String root_ca;
 }
 
 String post_https(String& host, String& content_type, String& content);
@@ -29,31 +30,14 @@ void setup()
 {
     auto config = M5.config();
     M5.begin(config);
-    SD.begin(4);
+
+    settings.begin();
 
     M5.Lcd.setFont(&fonts::lgfxJapanGothic_16);
     M5.Lcd.println("Misskey on M5Stack");
 
-    // 設定ファイル開く
-    File settings_file = SD.open("/misskey_settings.json");
-    if (!settings_file) {
-      M5.Lcd.println("Settings file open failed.");
-      return;
-    }
-
-    // JSONデシリアライズ
-    DeserializationError error = deserializeJson(json_settings, settings_file);
-    if (error != DeserializationError::Ok)
-    {
-        M5.Lcd.println("JSON deserialize failed.");
-        return;
-    }
-
     // JSONからSSID, PASS読み込んでWi-Fi接続
-    const char* ssid = json_settings["ssid"];
-    const char* password = json_settings["password"];
-
-    WiFi.begin(ssid, password);
+    WiFi.begin(settings.get_ssid(), settings.get_password());
 
     M5.Lcd.print("Wi-Fi connecting");
     while (WiFi.status() != WL_CONNECTED)
@@ -68,23 +52,6 @@ void setup()
 
     delay(2000);
 
-    // ファイルからルート証明書読み込み
-    const char* root_ca_name = json_settings["root_ca"];
-    File root_ca_file = SD.open(root_ca_name);
-    if (!root_ca_file)
-    {
-        M5.Lcd.println("Root CA file open failed.");
-        return;
-    }
-
-    // String メモリ確保
-    root_ca.reserve(root_ca_file.available());
-
-    while (root_ca_file.available())
-    {
-        root_ca += static_cast<char>(root_ca_file.read());
-    }
-
     M5.Lcd.clear();
     M5.Lcd.setCursor(0, 0);
 }
@@ -93,7 +60,7 @@ void get_timeline()
 {
     json_request.clear();
 
-    json_request["i"] = json_settings["api_token"];
+    json_request["i"] = settings.get_api_token();
     json_request["limit"] = 3;
 
     String request;
@@ -173,7 +140,7 @@ String post_https(String& url, String& content_type, String& content)
     String response;
 
     // 証明書セットして送信
-    if (!http_client.begin(url, root_ca.c_str()))
+    if (!http_client.begin(url, settings.get_root_ca().c_str()))
     {
         M5.Lcd.println("HTTPS Connection failed");
         return response;
