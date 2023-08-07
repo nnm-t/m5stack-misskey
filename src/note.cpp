@@ -2,6 +2,9 @@
 
 void Note::show()
 {
+	M5.Lcd.clear();
+	M5.Lcd.setCursor(0, 24);
+
 	if (_json.containsKey("renote"))
 	{
 		// Renote
@@ -14,15 +17,15 @@ void Note::show()
 		String text = json_renote["text"];
 		String date_time = json_renote["createdAt"];
 
-		M5.Lcd.setTextColor(0x2463EDU, 0x000000U);
+		M5.Lcd.setTextColor(accent2_color, background_color);
 		M5.Lcd.print(name);
 		M5.Lcd.print(" @");
 		M5.Lcd.println(user_name);
 
-		M5.Lcd.setTextColor(0xFFFFFFU, 0x000000U);
+		M5.Lcd.setTextColor(foreground_color, background_color);
 		M5.Lcd.println(text);
 		
-		M5.Lcd.setTextColor(0xCCCCCCU, 0x000000U);
+		M5.Lcd.setTextColor(gray_color, background_color);
 		M5.Lcd.println(date_time);
 		M5.Lcd.print("\n");
 		return;
@@ -35,15 +38,15 @@ void Note::show()
 	String text = _json["text"];
 	String date_time = _json["createdAt"];
 
-	M5.Lcd.setTextColor(0x96CC30U, 0x000000U);
+	M5.Lcd.setTextColor(accent_color, background_color);
 	M5.Lcd.print(name);
 	M5.Lcd.print(" @");
 	M5.Lcd.println(user_name);
 
-	M5.Lcd.setTextColor(0xFFFFFFU, 0x000000U);
+	M5.Lcd.setTextColor(foreground_color, background_color);
 	M5.Lcd.println(text);
 	
-	M5.Lcd.setTextColor(0xCCCCCCU, 0x000000U);
+	M5.Lcd.setTextColor(gray_color, background_color);
 	M5.Lcd.println(date_time);
 	M5.Lcd.print("\n");
 }

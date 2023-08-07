@@ -2,13 +2,12 @@
 
 void NoteState::show_current_note()
 {
-	M5.Lcd.clear();
-	M5.Lcd.setCursor(0, 0);
-
 	if (_current_note != nullptr)
 	{
 		_current_note->show();
 	}
+
+	_footer.show();
 }
 
 void NoteState::begin()

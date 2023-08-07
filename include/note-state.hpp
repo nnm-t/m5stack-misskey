@@ -4,15 +4,19 @@
 
 #include <Arduino.h>
 
-#include <M5Unified.h>
+#include <M5Unified.hpp>
 
 #include "i-state.hpp"
 #include "note.hpp"
 #include "misskey.hpp"
+#include "footer.hpp"
 
 class NoteState : public IState
 {
 	Misskey& _misskey;
+
+	Footer _footer = Footer("直後", "最新", "直前");
+
 	Note* _current_note = nullptr;
 
 	void show_current_note();

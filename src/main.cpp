@@ -50,7 +50,6 @@ void setup()
     delay(2000);
 
     M5.Lcd.clear();
-    M5.Lcd.setCursor(0, 0);
 
     state_manager.begin();
 }

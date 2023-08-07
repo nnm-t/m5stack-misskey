@@ -5,6 +5,8 @@
 #include <M5Unified.hpp>
 #include <ArduinoJson.h>
 
+#include "color.hpp"
+
 class Note
 {
 	JsonVariant _json;
