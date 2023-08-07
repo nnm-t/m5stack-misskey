@@ -31,4 +31,6 @@ public:
 	void on_button_b_pressed();
 
 	void on_button_c_pressed();
+
+	void on_key_pressed(const uint8_t keycode);
 };

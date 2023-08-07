@@ -10,14 +10,16 @@
 #include "https.hpp"
 #include "note.hpp"
 #include "misskey.hpp"
+#include "faces-keyboard.hpp"
 #include "note-state.hpp"
 #include "state-manager.hpp"
 
 namespace {
-
     Settings settings;
     HTTPS https(settings);
     Misskey misskey(settings, https);
+
+    FacesKeyboard keyboard;
 
     NoteState note_state(misskey);
     StateManager state_manager(note_state);
@@ -29,6 +31,9 @@ void setup()
     M5.begin(config);
 
     settings.begin();
+
+    keyboard.on_key_pressed = [&](const uint8_t keycode){ state_manager.on_key_pressed(keycode); };
+    keyboard.begin();
 
     M5.Lcd.setFont(&fonts::lgfxJapanGothic_16);
     M5.Lcd.println("Misskey on M5Stack");
@@ -73,6 +78,7 @@ void loop()
         state_manager.on_button_c_pressed();
     }
 
+    keyboard.update();
     state_manager.update();
 
     delay(50);

@@ -30,3 +30,8 @@ void StateManager::on_button_c_pressed()
 {
 	_current_state->on_button_c_pressed();
 }
+
+void StateManager::on_key_pressed(const uint8_t keycode)
+{
+	_current_state->on_key_pressed(keycode);
+}

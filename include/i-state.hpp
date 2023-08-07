@@ -23,4 +23,9 @@ public:
 	{
 
 	}
+
+	virtual void on_key_pressed(const uint8_t keycode)
+	{
+
+	}
 };
