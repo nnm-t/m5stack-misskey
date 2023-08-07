@@ -2,8 +2,9 @@
 
 void Note::show()
 {
-	M5.Lcd.clear();
+	M5.Lcd.fillRect(0, 24, 320, 192, background_color);
 	M5.Lcd.setCursor(0, 24);
+	M5.Lcd.setFont(&fonts::lgfxJapanGothic_20);
 
 	if (_json.containsKey("renote"))
 	{

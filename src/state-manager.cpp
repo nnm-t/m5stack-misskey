@@ -2,6 +2,8 @@
 
 void StateManager::begin()
 {
+	_header.begin();
+
 	_current_state = &_note_state;
 
 	_current_state->begin();
@@ -9,6 +11,8 @@ void StateManager::begin()
 
 void StateManager::update()
 {
+	_header.update();
+
 	_current_state->update();
 }
 

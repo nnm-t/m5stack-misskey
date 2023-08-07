@@ -6,10 +6,13 @@
 
 #include "i-state.hpp"
 #include "note-state.hpp"
+#include "header.hpp"
 
 class StateManager
 {
 	NoteState& _note_state;
+
+	Header _header = Header();
 
 	IState* _current_state = nullptr;
 
