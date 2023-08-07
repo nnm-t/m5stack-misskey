@@ -8,6 +8,7 @@
 class Note
 {
 	JsonVariant _json;
+
 public:
 	Note(JsonVariant& json) : _json(json)
 	{

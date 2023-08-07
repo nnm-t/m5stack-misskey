@@ -10,6 +10,8 @@
 #include "https.hpp"
 #include "note.hpp"
 #include "misskey.hpp"
+#include "note-state.hpp"
+#include "state-manager.hpp"
 
 namespace {
 
@@ -17,7 +19,8 @@ namespace {
     HTTPS https(settings);
     Misskey misskey(settings, https);
 
-    Note* current_note = nullptr;
+    NoteState note_state(misskey);
+    StateManager state_manager(note_state);
 }
 
 void setup()
@@ -48,6 +51,8 @@ void setup()
 
     M5.Lcd.clear();
     M5.Lcd.setCursor(0, 0);
+
+    state_manager.begin();
 }
 
 void loop()
@@ -56,44 +61,20 @@ void loop()
 
     if (M5.BtnA.wasPressed())
     {
-        Note* next_note = misskey.get_after_note(current_note);
-        delete current_note;
-        current_note = next_note;
-
-        M5.Lcd.clear();
-        M5.Lcd.setCursor(0, 0);
-        if (current_note != nullptr)
-        {
-            current_note->show();
-        }
+        state_manager.on_button_a_pressed();
     }
 
     if (M5.BtnB.wasPressed())
     {
-        delete current_note;
-        current_note = misskey.get_home_timeline();
-
-        M5.Lcd.clear();
-        M5.Lcd.setCursor(0, 0);
-        if (current_note != nullptr)
-        {
-            current_note->show();
-        }
+        state_manager.on_button_b_pressed();
     }
 
     if (M5.BtnC.wasPressed())
     {
-        Note* next_note = misskey.get_before_note(current_note);
-        delete current_note;
-        current_note = next_note;
-
-        M5.Lcd.clear();
-        M5.Lcd.setCursor(0, 0);
-        if (current_note != nullptr)
-        {
-            current_note->show();
-        }
+        state_manager.on_button_c_pressed();
     }
+
+    state_manager.update();
 
     delay(50);
 }
