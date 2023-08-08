@@ -12,6 +12,7 @@
 #include "misskey.hpp"
 #include "faces-keyboard.hpp"
 #include "note-state.hpp"
+#include "note-create-state.hpp"
 #include "state-manager.hpp"
 
 namespace {
@@ -22,7 +23,8 @@ namespace {
     FacesKeyboard keyboard;
 
     NoteState note_state(misskey);
-    StateManager state_manager(note_state);
+    NoteCreateState note_create_state(misskey);
+    StateManager state_manager(note_state, note_create_state);
 }
 
 void setup()

@@ -6,18 +6,20 @@
 
 #include "i-state.hpp"
 #include "note-state.hpp"
+#include "note-create-state.hpp"
 #include "header.hpp"
 
 class StateManager
 {
 	NoteState& _note_state;
+	NoteCreateState& _note_create_state;
 
 	Header _header = Header();
 
 	IState* _current_state = nullptr;
 
 public:
-	StateManager(NoteState& note_state) : _note_state(note_state)
+	StateManager(NoteState& note_state, NoteCreateState& note_create_state) : _note_state(note_state), _note_create_state(note_create_state)
 	{
 
 	}

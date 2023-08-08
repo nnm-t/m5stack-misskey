@@ -22,11 +22,6 @@ void NoteState::update()
 
 void NoteState::on_button_a_pressed()
 {
-	Note* const next_note = _misskey.get_after_note(_current_note);
-	delete _current_note;
-	_current_note = next_note;
-
-	show_current_note();
 }
 
 void NoteState::on_button_b_pressed()
@@ -39,9 +34,29 @@ void NoteState::on_button_b_pressed()
 
 void NoteState::on_button_c_pressed()
 {
-	Note* const next_note = _misskey.get_before_note(_current_note);
-	delete _current_note;
-	_current_note = next_note;
+}
 
-	show_current_note();
+void NoteState::on_key_pressed(const uint8_t keycode)
+{
+	if (keycode == 0x6E)
+	{
+		// n (左)
+		Note* const next_note = _misskey.get_after_note(_current_note);
+		delete _current_note;
+		_current_note = next_note;
+
+		show_current_note();
+		return;
+	}
+
+	if (keycode == 0x24)
+	{
+		// $ (右)
+		Note* const next_note = _misskey.get_before_note(_current_note);
+		delete _current_note;
+		_current_note = next_note;
+
+		show_current_note();
+		return;
+	}
 }
