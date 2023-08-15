@@ -21,3 +21,18 @@ void Footer::show()
 	M5.Lcd.setTextDatum(TL_DATUM);
 	M5.Lcd.setFont(&fonts::lgfxJapanGothic_20);
 }
+
+void Footer::set_left(const char* text)
+{
+	_left = text;
+}
+
+void Footer::set_center(const char* text)
+{
+	_center = text;
+}
+
+void Footer::set_right(const char* text)
+{
+	_right = text;
+}

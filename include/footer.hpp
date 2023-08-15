@@ -24,4 +24,10 @@ public:
 	}
 
 	void show();
+
+	void set_left(const char* text);
+
+	void set_center(const char* text);
+
+	void set_right(const char* text);
 };

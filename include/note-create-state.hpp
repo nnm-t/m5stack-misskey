@@ -16,11 +16,21 @@ class NoteCreateState : public IState
 	Footer _footer = Footer("戻る", "英数", "送信");
 
 	String _text;
+	String _text_japanese;
+	String _text_japanese_temp;
+
+	bool _is_japanese = false;
 
 	void show();
 
+	void add_kana(const char c);
+
+	void kana_from_temp(const char* temp, const char* kana);
+
+	void remove_utf8(String& text);
+
 public:
-	NoteCreateState(Misskey& misskey) : _misskey(misskey), _text(String())
+	NoteCreateState(Misskey& misskey) : _misskey(misskey), _text(String()), _text_japanese(String()), _text_japanese_temp(String())
 	{
 
 	}
@@ -28,6 +38,8 @@ public:
 	void begin() override;
 
 	void update() override;
+	
+	void on_button_b_pressed() override;
 
 	void on_button_c_pressed() override;
 
