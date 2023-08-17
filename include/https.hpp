@@ -15,4 +15,6 @@ public:
 	}
 
 	String post(String& url, String& content_type, String& content);
+
+	String http_get(String& url);
 };

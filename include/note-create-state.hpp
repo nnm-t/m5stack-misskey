@@ -7,11 +7,13 @@
 #include "color.hpp"
 #include "i-state.hpp"
 #include "misskey.hpp"
+#include "input-method.hpp"
 #include "footer.hpp"
 
 class NoteCreateState : public IState
 {
 	Misskey& _misskey;
+	InputMethod& _input_method;
 
 	Footer _footer = Footer("戻る", "英数", "送信");
 
@@ -20,6 +22,7 @@ class NoteCreateState : public IState
 	String _text_japanese_temp;
 
 	bool _is_japanese = false;
+	bool _is_translate = false;
 
 	void show();
 
@@ -30,7 +33,7 @@ class NoteCreateState : public IState
 	void remove_utf8(String& text);
 
 public:
-	NoteCreateState(Misskey& misskey) : _misskey(misskey), _text(String()), _text_japanese(String()), _text_japanese_temp(String())
+	NoteCreateState(Misskey& misskey, InputMethod& input_method) : _misskey(misskey), _input_method(input_method), _text(String()), _text_japanese(String()), _text_japanese_temp(String())
 	{
 
 	}

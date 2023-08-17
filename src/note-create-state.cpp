@@ -46,6 +46,8 @@ void NoteCreateState::on_key_pressed(const uint8_t keycode)
 		// BackSpace
 		if (_is_japanese)
 		{
+			_is_translate = false;
+
 			if (_text_japanese_temp.length() > 0)
 			{
 				_text_japanese_temp.remove(_text_japanese_temp.length() - 1);
@@ -66,6 +68,8 @@ void NoteCreateState::on_key_pressed(const uint8_t keycode)
 	{
 		if (_is_japanese && (!_text_japanese.isEmpty() || !_text_japanese_temp.isEmpty()))
 		{
+			// 確定 (変換確定を含む)
+			_is_translate = false;
 			_text += _text_japanese;
 			_text += _text_japanese_temp;
 			_text_japanese.clear();
@@ -77,9 +81,39 @@ void NoteCreateState::on_key_pressed(const uint8_t keycode)
 			_text += "\n";
 		}
 	}
-	else if (keycode >= 0x20 && keycode < 0x7F)
+	else if (keycode == 0x20)
 	{
-		if (_is_japanese)
+		// Space
+		if (!_is_japanese)
+		{
+			// 英数字
+			_text += " ";
+		}
+		else if (!_text_japanese.isEmpty() || !_text_japanese_temp.isEmpty())
+		{
+			String translate_text = _text_japanese + _text_japanese_temp;
+			_text_japanese_temp.clear();
+
+			if (!_is_translate)
+			{
+				// 変換開始
+				_text_japanese = _input_method.request(translate_text);
+				_is_translate = true;
+			}
+			else
+			{
+				// 次候補
+				_text_japanese = _input_method.next();
+			}
+		}
+	}
+	else if (keycode > 0x20 && keycode < 0x7F)
+	{
+		if (_is_translate)
+		{
+			// 変換中は無効
+		}
+		else if (_is_japanese)
 		{
 			add_kana(static_cast<char>(keycode));
 		}
@@ -105,6 +139,7 @@ void NoteCreateState::on_button_b_pressed()
 	else
 	{
 		_footer.set_center("英数");
+		_is_translate = false;
 		_text_japanese.clear();
 		_text_japanese_temp.clear();
 	}
@@ -327,7 +362,6 @@ void NoteCreateState::remove_utf8(String& text)
 		const uint8_t code = static_cast<uint8_t>(text[i]);
 		if (code < 0x7F || (code > 0xC2 && code < 0xF4))
 		{
-			Serial.printf("%d, %d", i, text.length() - i);
 			// ここから末尾まで除去
 			text.remove(i, text.length() - i);
 			break;
