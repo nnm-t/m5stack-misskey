@@ -5,6 +5,7 @@
 #include <M5Unified.hpp>
 #include <ArduinoJson.h>
 
+#include "color.hpp"
 #include "settings.hpp"
 #include "https.hpp"
 #include "note.hpp"

@@ -3,6 +3,7 @@
 #include <Arduino.h>
 #include <HTTPClient.h>
 
+#include "color.hpp"
 #include "settings.hpp"
 
 class HTTPS
