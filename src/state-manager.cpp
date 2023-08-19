@@ -11,9 +11,12 @@ void StateManager::begin()
 
 void StateManager::update()
 {
+	_current_state->update();
+
 	_header.update();
 
-	_current_state->update();
+	// pushSprite
+	_canvas.pushSprite(0, 0);
 }
 
 void StateManager::on_button_a_pressed()

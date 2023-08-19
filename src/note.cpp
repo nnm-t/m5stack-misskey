@@ -3,7 +3,7 @@
 void Note::show(M5Canvas& canvas)
 {
 	canvas.fillRect(0, 24, 320, 192, background_color);
-	canvas.setCursor(0, 24);
+	canvas.setCursor(0, _y);
 	canvas.setFont(&fonts::lgfxJapanGothic_24);
 
 	if (_json.containsKey("renote"))
@@ -55,4 +55,16 @@ void Note::show(M5Canvas& canvas)
 const char* Note::get_id()
 {
 	return _json["id"].as<const char*>();
+}
+
+void Note::scroll_up(M5Canvas& canvas)
+{
+	_y += 24;
+	show(canvas);
+}
+
+void Note::scroll_down(M5Canvas& canvas)
+{
+	_y -= 24;
+	show(canvas);
 }

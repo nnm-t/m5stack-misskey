@@ -23,8 +23,6 @@ void NoteCreateState::show()
 	}
 
 	_footer.show(_canvas);
-
-	_canvas.pushSprite(0, 0);
 }
 
 void NoteCreateState::begin()

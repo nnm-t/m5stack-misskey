@@ -31,7 +31,7 @@ namespace {
 
     NoteState note_state(misskey, canvas);
     NoteCreateState note_create_state(misskey, input_method, canvas);
-    StateManager state_manager(header, note_state, note_create_state);
+    StateManager state_manager(header, note_state, note_create_state, canvas);
 }
 
 void setup()

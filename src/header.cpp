@@ -2,6 +2,11 @@
 
 void Header::begin()
 {
+	update();
+}
+
+void Header::update()
+{
 	_canvas.fillRect(0, 0, 320, 24, accent_color);
 
 	_canvas.setTextColor(foreground_color, accent_color);
@@ -12,17 +17,7 @@ void Header::begin()
 	_canvas.drawString(_settings.get_title(), 24, 0);
 	_canvas.drawString("%", 308, 0);
 
-	_canvas.setFont(&fonts::lgfxJapanGothic_20);
-
-	update();
-}
-
-void Header::update()
-{
 	_canvas.fillRect(272, 0, 36, 24, accent_color);
-
-	_canvas.setTextColor(foreground_color, accent_color);
-	_canvas.setFont(&fonts::lgfxJapanGothic_24);
 
 	const int32_t battery_level = M5.Power.getBatteryLevel();
 
