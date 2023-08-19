@@ -22,12 +22,38 @@ void NoteCreateState::show()
 		_canvas.setTextColor(foreground_color, background_color);
 	}
 
+	// Visibility Icon
+	switch (_visibility)
+	{
+		case NoteVisibility::Public:
+			_canvas.drawBmpFile(SD, "/public.bmp", 272, 24);
+			break;
+		case NoteVisibility::Home:
+			_canvas.drawBmpFile(SD, "/home.bmp", 272, 24);
+			break;
+		case NoteVisibility::Followers:
+			_canvas.drawBmpFile(SD, "/followers.bmp", 272, 24);
+			break;
+	}
+
+	if (!_local_only)
+	{
+		_canvas.drawBmpFile(SD, "/federate.bmp", 296, 24);
+	}
+	else
+	{
+		_canvas.drawBmpFile(SD, "/de_federate.bmp", 296, 24);
+	}
+
 	_footer.show(_canvas);
 }
 
 void NoteCreateState::begin()
 {
 	_canvas.fillRect(0, 24, 320, 216, background_color);
+
+	_visibility = NoteVisibility::Public;
+	_local_only = true;
 
 	_text.clear();
 
@@ -41,7 +67,30 @@ void NoteCreateState::update()
 
 void NoteCreateState::on_key_pressed(const uint8_t keycode)
 {
-	if (keycode == 0x08)
+	if (keycode == 0xAF)
+	{
+		// Alt + 0
+		// Visibility
+		switch (_visibility)
+		{
+			case NoteVisibility::Public:
+				_visibility = NoteVisibility::Home;
+				break;
+			case NoteVisibility::Home:
+				_visibility = NoteVisibility::Followers;
+				break;
+			default:
+				_visibility = NoteVisibility::Public;
+				break;
+		}
+	}
+	else if (keycode == 0x9D)
+	{
+		// Alt + F
+		// Federate
+		_local_only = !_local_only;
+	}
+	else if (keycode == 0x08)
 	{
 		// BackSpace
 		if (_is_japanese)
@@ -151,7 +200,7 @@ void NoteCreateState::on_button_b_pressed()
 
 void NoteCreateState::on_button_c_pressed()
 {
-	_misskey.create_note(_text, NoteVisibility::Public, true);
+	_misskey.create_note(_text, _visibility, _local_only);
 }
 
 void NoteCreateState::add_kana(const char c)
