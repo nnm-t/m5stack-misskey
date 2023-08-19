@@ -17,7 +17,18 @@ void Note::show_text(M5Canvas& canvas, String& text)
 void Note::show_date_time(M5Canvas& canvas, String& date_time)
 {
 	canvas.setTextColor(gray_color, background_color);
-	canvas.println(date_time);
+
+	// 文字列からtm構造体へ変換
+	struct tm tm;
+	strptime(date_time.c_str(), "%Y-%m-%dT%H:%M:%S", &tm);
+	// time_tを取得
+	time_t time = mktime(&tm);
+	// 9時間進める
+	time += 9 * 60 * 60;
+
+	// 描画
+	struct tm* tm2 = localtime(&time);
+	canvas.printf("%d/%d/%d %d:%02d:%02d\n", tm2->tm_year + 1900, tm2->tm_mon + 1, tm2->tm_mday, tm2->tm_hour, tm2->tm_min, tm2->tm_sec);
 }
 
 void Note::show_visibility(M5Canvas& canvas, String& visibility)

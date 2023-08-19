@@ -1,5 +1,7 @@
 #pragma once
 
+#include <time.h>
+
 #include <Arduino.h>
 #include <SD.h>
 
