@@ -9,20 +9,18 @@ void NoteCreateState::show()
 
 	_canvas.print(_text);
 
-	if (!_is_japanese)
+	if (_is_japanese)
 	{
-		return;
+		// 日本語入力モード
+		_canvas.fillRect(0, 192, 320, 24, foreground_color);
+		_canvas.setTextColor(background_color, foreground_color);
+
+		_canvas.setCursor(0, 192);
+		_canvas.print(_text_japanese);
+		_canvas.print(_text_japanese_temp);
+
+		_canvas.setTextColor(foreground_color, background_color);
 	}
-
-	// 日本語入力モード
-	_canvas.fillRect(0, 196, 320, 20, foreground_color);
-	_canvas.setTextColor(background_color, foreground_color);
-
-	_canvas.setCursor(0, 196);
-	_canvas.print(_text_japanese);
-	_canvas.print(_text_japanese_temp);
-
-	_canvas.setTextColor(foreground_color, background_color);
 
 	_footer.show(_canvas);
 
@@ -33,9 +31,9 @@ void NoteCreateState::begin()
 {
 	_canvas.fillRect(0, 24, 320, 216, background_color);
 
-	show();
-
 	_text.clear();
+
+	show();
 }
 
 void NoteCreateState::update()

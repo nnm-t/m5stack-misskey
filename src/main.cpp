@@ -19,9 +19,10 @@
 namespace {
     M5Canvas canvas(&M5.Lcd);
 
-    Header header(canvas);
-
     Settings settings;
+
+    Header header(settings, canvas);
+
     HTTPS https(settings, header);
     Misskey misskey(settings, https, header);
     InputMethod input_method(https);

@@ -7,10 +7,14 @@ void Header::begin()
 	_canvas.setTextColor(foreground_color, accent_color);
 	_canvas.setFont(&fonts::lgfxJapanGothic_24);
 
-	_canvas.drawString("Misskey.io", 24, 0);
+	_canvas.drawBmpFile(SD, _settings.get_icon(), 0, 0);
+
+	_canvas.drawString(_settings.get_title(), 24, 0);
 	_canvas.drawString("%", 308, 0);
 
 	_canvas.setFont(&fonts::lgfxJapanGothic_20);
+
+	update();
 }
 
 void Header::update()

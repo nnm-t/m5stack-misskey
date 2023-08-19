@@ -28,4 +28,8 @@ public:
 	const char* get_api_token();
 
 	String& get_root_ca();
+
+	const char* get_title();
+
+	const char* get_icon();
 };

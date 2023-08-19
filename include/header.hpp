@@ -1,17 +1,20 @@
 #pragma once
 
 #include <Arduino.h>
+#include <SD.h>
 
 #include <M5Unified.hpp>
 
 #include "color.hpp"
+#include "settings.hpp"
 
 class Header
 {
+	Settings& _settings;
 	M5Canvas& _canvas;
 
 public:
-	Header(M5Canvas& canvas) : _canvas(canvas)
+	Header(Settings& settings, M5Canvas& canvas) : _settings(settings), _canvas(canvas)
 	{
 
 	}
