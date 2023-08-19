@@ -2,36 +2,62 @@
 
 void NoteCreateState::show()
 {
-	M5.Lcd.fillRect(0, 24, 320, 192, background_color);
-	M5.Lcd.setCursor(0, 48);
-	M5.Lcd.setTextColor(foreground_color, background_color);
-	M5.Lcd.setFont(&fonts::lgfxJapanGothic_20);
+	_canvas.fillRect(0, 24, 320, 192, background_color);
+	_canvas.setCursor(0, 48);
+	_canvas.setTextColor(foreground_color, background_color);
+	_canvas.setFont(&fonts::lgfxJapanGothic_24);
 
-	M5.Lcd.print(_text);
+	_canvas.print(_text);
 
-	if (!_is_japanese)
+	if (_is_japanese)
 	{
-		return;
+		// 日本語入力モード
+		_canvas.fillRect(0, 192, 320, 24, foreground_color);
+		_canvas.setTextColor(background_color, foreground_color);
+
+		_canvas.setCursor(0, 192);
+		_canvas.print(_text_japanese);
+		_canvas.print(_text_japanese_temp);
+
+		_canvas.setTextColor(foreground_color, background_color);
 	}
 
-	// 日本語入力モード
-	M5.Lcd.fillRect(0, 196, 320, 20, foreground_color);
-	M5.Lcd.setTextColor(background_color, foreground_color);
+	// Visibility Icon
+	switch (_visibility)
+	{
+		case NoteVisibility::Public:
+			_canvas.drawBmpFile(SD, "/public.bmp", 272, 24);
+			break;
+		case NoteVisibility::Home:
+			_canvas.drawBmpFile(SD, "/home.bmp", 272, 24);
+			break;
+		case NoteVisibility::Followers:
+			_canvas.drawBmpFile(SD, "/followers.bmp", 272, 24);
+			break;
+	}
 
-	M5.Lcd.setCursor(0, 196);
-	M5.Lcd.print(_text_japanese);
-	M5.Lcd.print(_text_japanese_temp);
+	if (!_local_only)
+	{
+		_canvas.drawBmpFile(SD, "/federate.bmp", 296, 24);
+	}
+	else
+	{
+		_canvas.drawBmpFile(SD, "/de_federate.bmp", 296, 24);
+	}
 
-	M5.Lcd.setTextColor(foreground_color, background_color);
+	_footer.show(_canvas);
 }
 
 void NoteCreateState::begin()
 {
-	M5.Lcd.fillRect(0, 24, 320, 216, background_color);
+	_canvas.fillRect(0, 24, 320, 216, background_color);
 
-	_footer.show();
+	_visibility = NoteVisibility::Public;
+	_local_only = true;
 
 	_text.clear();
+
+	show();
 }
 
 void NoteCreateState::update()
@@ -41,7 +67,30 @@ void NoteCreateState::update()
 
 void NoteCreateState::on_key_pressed(const uint8_t keycode)
 {
-	if (keycode == 0x08)
+	if (keycode == 0xAF)
+	{
+		// Alt + 0
+		// Visibility
+		switch (_visibility)
+		{
+			case NoteVisibility::Public:
+				_visibility = NoteVisibility::Home;
+				break;
+			case NoteVisibility::Home:
+				_visibility = NoteVisibility::Followers;
+				break;
+			default:
+				_visibility = NoteVisibility::Public;
+				break;
+		}
+	}
+	else if (keycode == 0x9D)
+	{
+		// Alt + F
+		// Federate
+		_local_only = !_local_only;
+	}
+	else if (keycode == 0x08)
 	{
 		// BackSpace
 		if (_is_japanese)
@@ -144,14 +193,14 @@ void NoteCreateState::on_button_b_pressed()
 		_text_japanese_temp.clear();
 	}
 
-	_footer.show();
+	_footer.show(_canvas);
 
 	show();
 }
 
 void NoteCreateState::on_button_c_pressed()
 {
-	_misskey.create_note(_text, NoteVisibility::Public, true);
+	_misskey.create_note(_text, _visibility, _local_only);
 }
 
 void NoteCreateState::add_kana(const char c)

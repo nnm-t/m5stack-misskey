@@ -57,6 +57,16 @@ const char* Settings::get_api_token()
 	return _json_settings["api_token"].as<const char*>();
 }
 
+const char* Settings::get_title()
+{
+	return _json_settings["title"].as<const char*>();
+}
+
+const char* Settings::get_icon()
+{
+	return _json_settings["icon"].as<const char*>();
+}
+
 String& Settings::get_root_ca()
 {
 	return _root_ca;

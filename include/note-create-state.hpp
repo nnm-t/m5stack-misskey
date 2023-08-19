@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Arduino.h>
+#include <SD.h>
 
 #include <M5Unified.hpp>
 
@@ -14,8 +15,9 @@ class NoteCreateState : public IState
 {
 	Misskey& _misskey;
 	InputMethod& _input_method;
+	M5Canvas& _canvas;
 
-	Footer _footer = Footer("戻る", "英数", "送信");
+	Footer _footer = Footer("戻る", "英数", "投稿");
 
 	String _text;
 	String _text_japanese;
@@ -23,6 +25,9 @@ class NoteCreateState : public IState
 
 	bool _is_japanese = false;
 	bool _is_translate = false;
+
+	NoteVisibility _visibility = NoteVisibility::Public;
+	bool _local_only = true;
 
 	void show();
 
@@ -33,7 +38,7 @@ class NoteCreateState : public IState
 	void remove_utf8(String& text);
 
 public:
-	NoteCreateState(Misskey& misskey, InputMethod& input_method) : _misskey(misskey), _input_method(input_method), _text(String()), _text_japanese(String()), _text_japanese_temp(String())
+	NoteCreateState(Misskey& misskey, InputMethod& input_method, M5Canvas& canvas) : _misskey(misskey), _input_method(input_method), _canvas(canvas), _text(String()), _text_japanese(String()), _text_japanese_temp(String())
 	{
 
 	}

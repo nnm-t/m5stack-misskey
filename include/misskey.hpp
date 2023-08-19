@@ -8,6 +8,7 @@
 #include "color.hpp"
 #include "settings.hpp"
 #include "https.hpp"
+#include "header.hpp"
 #include "note.hpp"
 #include "note-visibility.hpp"
 
@@ -22,6 +23,7 @@ class Misskey
 
 	Settings& _settings;
 	HTTPS& _https;
+	Header& _header;
 
     StaticJsonDocument<4096> _json_request;
     StaticJsonDocument<16384> _json_response;
@@ -31,7 +33,7 @@ class Misskey
 	String submit_note();
 
 public:
-	Misskey(Settings& settings, HTTPS& https) : _settings(settings), _https(https), _json_request(StaticJsonDocument<4096>()), _json_response(StaticJsonDocument<16384>())
+	Misskey(Settings& settings, HTTPS& https, Header& header) : _settings(settings), _https(https), _header(header), _json_request(StaticJsonDocument<4096>()), _json_response(StaticJsonDocument<16384>())
 	{
 
 	}

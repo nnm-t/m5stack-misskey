@@ -11,15 +11,16 @@
 
 class StateManager
 {
+	Header& _header;
 	NoteState& _note_state;
 	NoteCreateState& _note_create_state;
 
-	Header _header = Header();
+	M5Canvas& _canvas;
 
 	IState* _current_state = nullptr;
 
 public:
-	StateManager(NoteState& note_state, NoteCreateState& note_create_state) : _note_state(note_state), _note_create_state(note_create_state)
+	StateManager(Header& header, NoteState& note_state, NoteCreateState& note_create_state, M5Canvas& canvas) : _header(header), _note_state(note_state), _note_create_state(note_create_state), _canvas(canvas)
 	{
 
 	}

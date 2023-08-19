@@ -2,27 +2,44 @@
 
 void Header::begin()
 {
-	M5.Lcd.fillRect(0, 0, 320, 24, accent_color);
-
-	M5.Lcd.setTextColor(foreground_color, accent_color);
-	M5.Lcd.setFont(&fonts::lgfxJapanGothic_24);
-
-	M5.Lcd.drawString("Misskey.io", 24, 0);
-	M5.Lcd.drawString("%", 308, 0);
-
-	M5.Lcd.setFont(&fonts::lgfxJapanGothic_20);
+	update();
 }
 
 void Header::update()
 {
-	M5.Lcd.fillRect(272, 0, 36, 24, accent_color);
+	_canvas.fillRect(0, 0, 320, 24, accent_color);
 
-	M5.Lcd.setTextColor(foreground_color, accent_color);
-	M5.Lcd.setFont(&fonts::lgfxJapanGothic_24);
+	_canvas.setTextColor(foreground_color, accent_color);
+	_canvas.setFont(&fonts::lgfxJapanGothic_24);
+
+	_canvas.drawBmpFile(SD, _settings.get_icon(), 0, 0);
+
+	_canvas.drawString(_settings.get_title(), 24, 0);
+	_canvas.drawString("%", 308, 0);
+
+	_canvas.fillRect(272, 0, 36, 24, accent_color);
 
 	const int32_t battery_level = M5.Power.getBatteryLevel();
 
-	M5.Lcd.drawString(String(battery_level), 272, 0);
+	_canvas.drawString(String(battery_level), 272, 0);
 
-	M5.Lcd.setFont(&fonts::lgfxJapanGothic_20);
+	_canvas.setFont(&fonts::lgfxJapanGothic_20);
+}
+
+void Header::print(const char* text)
+{
+	_canvas.fillRect(24, 0, 248, 24, accent_color);
+	_canvas.setTextColor(foreground_color, accent_color);
+	_canvas.setFont(&fonts::lgfxJapanGothic_24);
+
+	_canvas.drawString(text, 24, 0);
+}
+
+void Header::print(String& text)
+{
+	_canvas.fillRect(24, 0, 248, 24, accent_color);
+	_canvas.setTextColor(foreground_color, accent_color);
+	_canvas.setFont(&fonts::lgfxJapanGothic_24);
+
+	_canvas.drawString(text, 24, 0);
 }

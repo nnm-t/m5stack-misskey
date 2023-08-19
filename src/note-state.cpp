@@ -4,10 +4,10 @@ void NoteState::show_current_note()
 {
 	if (_current_note != nullptr)
 	{
-		_current_note->show();
+		_current_note->show(_canvas);
 	}
 
-	_footer.show();
+	_footer.show(_canvas);
 }
 
 void NoteState::begin()
@@ -57,6 +57,28 @@ void NoteState::on_key_pressed(const uint8_t keycode)
 		_current_note = next_note;
 
 		show_current_note();
+		return;
+	}
+
+	if (keycode == 0x6B)
+	{
+		// k (上)
+		if (_current_note != nullptr)
+		{
+			_current_note->scroll_up(_canvas);
+			_footer.show(_canvas);
+		}
+		return;
+	}
+
+	if (keycode == 0x6D)
+	{
+		// m (下)
+		if (_current_note != nullptr)
+		{
+			_current_note->scroll_down(_canvas);
+			_footer.show(_canvas);
+		}
 		return;
 	}
 }

@@ -17,16 +17,21 @@
 #include "state-manager.hpp"
 
 namespace {
+    M5Canvas canvas(&M5.Lcd);
+
     Settings settings;
-    HTTPS https(settings);
-    Misskey misskey(settings, https);
+
+    Header header(settings, canvas);
+
+    HTTPS https(settings, header);
+    Misskey misskey(settings, https, header);
     InputMethod input_method(https);
 
     FacesKeyboard keyboard;
 
-    NoteState note_state(misskey);
-    NoteCreateState note_create_state(misskey, input_method);
-    StateManager state_manager(note_state, note_create_state);
+    NoteState note_state(misskey, canvas);
+    NoteCreateState note_create_state(misskey, input_method, canvas);
+    StateManager state_manager(header, note_state, note_create_state, canvas);
 }
 
 void setup()
@@ -59,6 +64,9 @@ void setup()
     delay(2000);
 
     M5.Lcd.clear();
+
+    canvas.setPsram(true);
+    canvas.createSprite(320, 240);
 
     state_manager.begin();
 }

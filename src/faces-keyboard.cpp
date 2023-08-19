@@ -2,19 +2,19 @@
 
 void FacesKeyboard::begin()
 {
+	_wire = &Wire;
 	switch (M5.getBoard())
 	{
 		case m5::board_t::board_M5Stack:
-			_wire = &Wire;
 			_interrupt_pin = 5;
 			break;
 		case m5::board_t::board_M5StackCore2:
-			_wire = &Wire1;
 			_interrupt_pin = 33;
+			_wire->begin(21, 22);
 			break;
 		case m5::board_t::board_M5StackCoreS3:
-			_wire = &Wire1;
 			_interrupt_pin = 1;
+			_wire->begin(2, 1);
 			break;
 		default:
 			return;
@@ -35,7 +35,7 @@ void FacesKeyboard::update()
 		return;
 	}
 
-	_wire->requestFrom(i2c_address, 1);
+	_wire->requestFrom(i2c_address, 1U);
 
 	while (_wire->available())
 	{

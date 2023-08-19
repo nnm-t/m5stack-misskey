@@ -8,8 +8,7 @@ String HTTPS::post(String& url, String& content_type, String& content)
     // 証明書セットして送信
     if (!http_client.begin(url, _settings.get_root_ca().c_str()))
     {
-        M5.Lcd.setTextColor(foreground_color, background_color);
-        M5.Lcd.println("HTTPS Connection failed");
+        _header.print("HTTPS Connection failed");
         return response;
     }
 
@@ -38,8 +37,7 @@ String HTTPS::http_get(String& url)
 
     if (!http_client.begin(url))
     {
-        M5.Lcd.setTextColor(foreground_color, background_color);
-        M5.Lcd.println("HTTP Connection failed");
+        _header.print("HTTPS Connection failed");
         return response;
     }
 

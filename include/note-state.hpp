@@ -14,6 +14,7 @@
 class NoteState : public IState
 {
 	Misskey& _misskey;
+	M5Canvas& _canvas;
 
 	Footer _footer = Footer("ノート", "最新", "");
 
@@ -22,7 +23,7 @@ class NoteState : public IState
 	void show_current_note();
 
 public:
-	NoteState(Misskey& misskey) : _misskey(misskey)
+	NoteState(Misskey& misskey, M5Canvas& canvas) : _misskey(misskey), _canvas(canvas)
 	{
 
 	}
