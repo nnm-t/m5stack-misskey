@@ -1,5 +1,40 @@
 #include "note.hpp"
 
+void Note::show_name(M5Canvas& canvas, String& name, String& user_name, const uint32_t color)
+{
+	canvas.setTextColor(color, background_color);
+	canvas.println(name);
+	canvas.print("@");
+	canvas.println(user_name);
+}
+
+void Note::show_text(M5Canvas& canvas, String& text)
+{
+	canvas.setTextColor(foreground_color, background_color);
+	canvas.println(text);
+}
+
+void Note::show_date_time(M5Canvas& canvas, String& date_time)
+{
+	canvas.setTextColor(gray_color, background_color);
+	canvas.println(date_time);
+}
+
+void Note::show_visibility(M5Canvas& canvas, String& visibility)
+{
+	if (visibility == "home")
+	{
+		canvas.drawBmpFile(SD, "/home.bmp", 296, _y + 24);
+		return;
+	}
+
+	if (visibility == "followers")
+	{
+		canvas.drawBmpFile(SD, "/followers.bmp", 296, _y + 24);
+		return;
+	}
+}
+
 void Note::show(M5Canvas& canvas)
 {
 	canvas.fillRect(0, 24, 320, 192, background_color);
@@ -17,17 +52,13 @@ void Note::show(M5Canvas& canvas)
 
 		String text = json_renote["text"];
 		String date_time = json_renote["createdAt"];
+		String visibility = json_renote["visibility"];
 
-		canvas.setTextColor(accent2_color, background_color);
-		canvas.println(name);
-		canvas.print("@");
-		canvas.println(user_name);
+		show_name(canvas, name, user_name, accent2_color);
+		show_text(canvas, text);
+		show_date_time(canvas, date_time);
+		show_visibility(canvas, visibility);
 
-		canvas.setTextColor(foreground_color, background_color);
-		canvas.println(text);
-		
-		canvas.setTextColor(gray_color, background_color);
-		canvas.println(date_time);
 		canvas.print("\n");
 		return;
 	}
@@ -38,17 +69,13 @@ void Note::show(M5Canvas& canvas)
 
 	String text = _json["text"];
 	String date_time = _json["createdAt"];
+	String visibility = _json["visibility"];
 
-	canvas.setTextColor(accent_color, background_color);
-	canvas.println(name);
-	canvas.print("@");
-	canvas.println(user_name);
-
-	canvas.setTextColor(foreground_color, background_color);
-	canvas.println(text);
+	show_name(canvas, name, user_name, accent_color);
+	show_text(canvas, text);
+	show_date_time(canvas, date_time);
+	show_visibility(canvas, visibility);
 	
-	canvas.setTextColor(gray_color, background_color);
-	canvas.println(date_time);
 	canvas.print("\n");
 }
 
