@@ -4,12 +4,15 @@
 #include <HTTPClient.h>
 
 #include "settings.hpp"
+#include "header.hpp"
 
 class HTTPS
 {
 	Settings& _settings;
+	Header& _header;
+
 public:
-	HTTPS(Settings& settings) : _settings(settings)
+	HTTPS(Settings& settings, Header& header) : _settings(settings), _header(header)
 	{
 
 	}

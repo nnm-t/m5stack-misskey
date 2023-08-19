@@ -23,7 +23,7 @@ public:
 
 	}
 
-	void show();
+	void show(M5Canvas& canvas);
 
 	void set_left(const char* text);
 

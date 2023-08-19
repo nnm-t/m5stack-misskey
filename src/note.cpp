@@ -1,10 +1,10 @@
 #include "note.hpp"
 
-void Note::show()
+void Note::show(M5Canvas& canvas)
 {
-	M5.Lcd.fillRect(0, 24, 320, 192, background_color);
-	M5.Lcd.setCursor(0, 24);
-	M5.Lcd.setFont(&fonts::lgfxJapanGothic_20);
+	canvas.fillRect(0, 24, 320, 192, background_color);
+	canvas.setCursor(0, 24);
+	canvas.setFont(&fonts::lgfxJapanGothic_24);
 
 	if (_json.containsKey("renote"))
 	{
@@ -18,17 +18,17 @@ void Note::show()
 		String text = json_renote["text"];
 		String date_time = json_renote["createdAt"];
 
-		M5.Lcd.setTextColor(accent2_color, background_color);
-		M5.Lcd.print(name);
-		M5.Lcd.print(" @");
-		M5.Lcd.println(user_name);
+		canvas.setTextColor(accent2_color, background_color);
+		canvas.println(name);
+		canvas.print("@");
+		canvas.println(user_name);
 
-		M5.Lcd.setTextColor(foreground_color, background_color);
-		M5.Lcd.println(text);
+		canvas.setTextColor(foreground_color, background_color);
+		canvas.println(text);
 		
-		M5.Lcd.setTextColor(gray_color, background_color);
-		M5.Lcd.println(date_time);
-		M5.Lcd.print("\n");
+		canvas.setTextColor(gray_color, background_color);
+		canvas.println(date_time);
+		canvas.print("\n");
 		return;
 	}
 
@@ -39,17 +39,17 @@ void Note::show()
 	String text = _json["text"];
 	String date_time = _json["createdAt"];
 
-	M5.Lcd.setTextColor(accent_color, background_color);
-	M5.Lcd.print(name);
-	M5.Lcd.print(" @");
-	M5.Lcd.println(user_name);
+	canvas.setTextColor(accent_color, background_color);
+	canvas.println(name);
+	canvas.print("@");
+	canvas.println(user_name);
 
-	M5.Lcd.setTextColor(foreground_color, background_color);
-	M5.Lcd.println(text);
+	canvas.setTextColor(foreground_color, background_color);
+	canvas.println(text);
 	
-	M5.Lcd.setTextColor(gray_color, background_color);
-	M5.Lcd.println(date_time);
-	M5.Lcd.print("\n");
+	canvas.setTextColor(gray_color, background_color);
+	canvas.println(date_time);
+	canvas.print("\n");
 }
 
 const char* Note::get_id()

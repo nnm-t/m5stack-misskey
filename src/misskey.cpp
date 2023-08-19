@@ -58,7 +58,7 @@ Note* Misskey::get_home_timeline()
 
     if (get_note() != DeserializationError::Ok)
     {
-        M5.Lcd.println("Response deserialize failed.");
+        _header.print("Response deserialize failed");
         return nullptr;
     }
     
@@ -82,7 +82,7 @@ Note* Misskey::get_before_note(Note* note)
 
     if (get_note() != DeserializationError::Ok)
     {
-        M5.Lcd.println("Response deserialize failed.");
+        _header.print("Response deserialize failed");
         return nullptr;
     }
     
@@ -106,7 +106,7 @@ Note* Misskey::get_after_note(Note* note)
 
     if (get_note() != DeserializationError::Ok)
     {
-        M5.Lcd.println("Response deserialize failed.");
+        _header.print("Response deserialize failed");
         return nullptr;
     }
     

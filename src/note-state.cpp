@@ -4,10 +4,12 @@ void NoteState::show_current_note()
 {
 	if (_current_note != nullptr)
 	{
-		_current_note->show();
+		_current_note->show(_canvas);
 	}
 
-	_footer.show();
+	_footer.show(_canvas);
+
+	_canvas.pushSprite(0, 0);
 }
 
 void NoteState::begin()

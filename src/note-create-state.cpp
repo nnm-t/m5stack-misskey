@@ -2,12 +2,12 @@
 
 void NoteCreateState::show()
 {
-	M5.Lcd.fillRect(0, 24, 320, 192, background_color);
-	M5.Lcd.setCursor(0, 48);
-	M5.Lcd.setTextColor(foreground_color, background_color);
-	M5.Lcd.setFont(&fonts::lgfxJapanGothic_20);
+	_canvas.fillRect(0, 24, 320, 192, background_color);
+	_canvas.setCursor(0, 48);
+	_canvas.setTextColor(foreground_color, background_color);
+	_canvas.setFont(&fonts::lgfxJapanGothic_24);
 
-	M5.Lcd.print(_text);
+	_canvas.print(_text);
 
 	if (!_is_japanese)
 	{
@@ -15,21 +15,25 @@ void NoteCreateState::show()
 	}
 
 	// 日本語入力モード
-	M5.Lcd.fillRect(0, 196, 320, 20, foreground_color);
-	M5.Lcd.setTextColor(background_color, foreground_color);
+	_canvas.fillRect(0, 196, 320, 20, foreground_color);
+	_canvas.setTextColor(background_color, foreground_color);
 
-	M5.Lcd.setCursor(0, 196);
-	M5.Lcd.print(_text_japanese);
-	M5.Lcd.print(_text_japanese_temp);
+	_canvas.setCursor(0, 196);
+	_canvas.print(_text_japanese);
+	_canvas.print(_text_japanese_temp);
 
-	M5.Lcd.setTextColor(foreground_color, background_color);
+	_canvas.setTextColor(foreground_color, background_color);
+
+	_footer.show(_canvas);
+
+	_canvas.pushSprite(0, 0);
 }
 
 void NoteCreateState::begin()
 {
-	M5.Lcd.fillRect(0, 24, 320, 216, background_color);
+	_canvas.fillRect(0, 24, 320, 216, background_color);
 
-	_footer.show();
+	show();
 
 	_text.clear();
 }
@@ -144,7 +148,7 @@ void NoteCreateState::on_button_b_pressed()
 		_text_japanese_temp.clear();
 	}
 
-	_footer.show();
+	_footer.show(_canvas);
 
 	show();
 }

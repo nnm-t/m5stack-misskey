@@ -8,8 +8,10 @@
 
 class Header
 {
+	M5Canvas& _canvas;
+
 public:
-	Header()
+	Header(M5Canvas& canvas) : _canvas(canvas)
 	{
 
 	}
@@ -17,4 +19,8 @@ public:
 	void begin();
 
 	void update();
+
+	void print(const char* text);
+
+	void print(String& text);
 };

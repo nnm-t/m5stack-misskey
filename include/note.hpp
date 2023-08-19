@@ -17,7 +17,7 @@ public:
 
 	}
 
-	void show();
+	void show(M5Canvas& canvas);
 
 	const char* get_id();
 };
