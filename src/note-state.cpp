@@ -4,7 +4,7 @@ void NoteState::show_current_note()
 {
 	if (_current_note != nullptr)
 	{
-		_current_note->show(_canvas);
+		_current_note->show(_https, _canvas);
 	}
 
 	_footer.show(_canvas);
@@ -69,7 +69,7 @@ void NoteState::on_key_pressed(const uint8_t keycode)
 		// k (上)
 		if (_current_note != nullptr)
 		{
-			_current_note->scroll_up(_canvas);
+			_current_note->scroll_up(_https, _canvas);
 			_footer.show(_canvas);
 		}
 		return;
@@ -80,7 +80,7 @@ void NoteState::on_key_pressed(const uint8_t keycode)
 		// m (下)
 		if (_current_note != nullptr)
 		{
-			_current_note->scroll_down(_canvas);
+			_current_note->scroll_down(_https, _canvas);
 			_footer.show(_canvas);
 		}
 		return;

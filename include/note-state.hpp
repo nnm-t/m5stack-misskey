@@ -10,11 +10,13 @@
 #include "i-state.hpp"
 #include "note.hpp"
 #include "misskey.hpp"
+#include "https.hpp"
 #include "footer.hpp"
 
 class NoteState : public IState
 {
 	Misskey& _misskey;
+	HTTPS& _https;
 	M5Canvas& _canvas;
 
 	Footer _footer = Footer("ノート", "最新", "");
@@ -26,7 +28,7 @@ class NoteState : public IState
 public:
 	std::function<void(Note*)> to_note_create_state = nullptr;
 
-	NoteState(Misskey& misskey, M5Canvas& canvas) : _misskey(misskey), _canvas(canvas)
+	NoteState(Misskey& misskey, HTTPS& https, M5Canvas& canvas) : _misskey(misskey), _https(https), _canvas(canvas)
 	{
 
 	}

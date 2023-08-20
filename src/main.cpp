@@ -29,7 +29,7 @@ namespace {
 
     FacesKeyboard keyboard;
 
-    NoteState note_state(misskey, canvas);
+    NoteState note_state(misskey, https, canvas);
     NoteCreateState note_create_state(misskey, input_method, canvas);
     StateManager state_manager(header, note_state, note_create_state, canvas);
 }

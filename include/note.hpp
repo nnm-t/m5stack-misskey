@@ -9,6 +9,7 @@
 #include <ArduinoJson.h>
 
 #include "color.hpp"
+#include "https.hpp"
 
 class Note
 {
@@ -27,11 +28,11 @@ public:
 
 	}
 
-	void show(M5Canvas& canvas);
+	void show(HTTPS& https, M5Canvas& canvas);
 
-	void scroll_up(M5Canvas& canvas);
+	void scroll_up(HTTPS& https, M5Canvas& canvas);
 
-	void scroll_down(M5Canvas& canvas);
+	void scroll_down(HTTPS& https, M5Canvas& canvas);
 
 	const char* get_id();
 

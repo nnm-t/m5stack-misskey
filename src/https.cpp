@@ -37,6 +37,33 @@ String HTTPS::http_get(String& url)
 
     if (!http_client.begin(url))
     {
+        _header.print("HTTP Connection failed");
+        return response;
+    }
+
+    const int32_t status_code = http_client.GET();
+
+    switch (status_code)
+    {
+        case 200:
+            response = http_client.getString();
+            break;
+        default:
+            M5.Lcd.println(http_client.errorToString(status_code));
+            break;
+    }
+
+    http_client.end();
+    return response;
+}
+
+String HTTPS::get(String& url)
+{
+    HTTPClient http_client;
+    String response;
+
+    if (!http_client.begin(url, _settings.get_root_ca().c_str()))
+    {
         _header.print("HTTPS Connection failed");
         return response;
     }

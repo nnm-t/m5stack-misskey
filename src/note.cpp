@@ -2,14 +2,20 @@
 
 void Note::show_name(M5Canvas& canvas, String& name, String& user_name, const uint32_t color)
 {
+	canvas.setCursor(0, _y);
+	canvas.setTextWrap(false);
 	canvas.setTextColor(color, background_color);
 	canvas.println(name);
+
+	canvas.setCursor(0, _y + 24);
 	canvas.print("@");
 	canvas.println(user_name);
+	canvas.setTextWrap(true);
 }
 
 void Note::show_text(M5Canvas& canvas, String& text)
 {
+	canvas.setCursor(0, _y + 48);
 	canvas.setTextColor(foreground_color, background_color);
 	canvas.println(text);
 }
@@ -46,7 +52,7 @@ void Note::show_visibility(M5Canvas& canvas, String& visibility)
 	}
 }
 
-void Note::show(M5Canvas& canvas)
+void Note::show(HTTPS& https, M5Canvas& canvas)
 {
 	canvas.fillRect(0, 24, 320, 192, background_color);
 	canvas.setCursor(0, _y);
@@ -60,6 +66,12 @@ void Note::show(M5Canvas& canvas)
 		JsonVariant json_user = json_renote["user"];
 		String name = json_user["name"];
 		String user_name = json_user["username"];
+		if (!json_user["host"].isNull())
+		{
+			user_name += "@";
+			user_name += json_user["host"].as<const char*>();
+		}
+		String avatar_url = json_renote["avatarUrl"];
 
 		String text = json_renote["text"];
 		String date_time = json_renote["createdAt"];
@@ -77,6 +89,12 @@ void Note::show(M5Canvas& canvas)
 	JsonVariant json_user = _json["user"];
 	String name = json_user["name"];
 	String user_name = json_user["username"];
+	if (!json_user["host"].isNull())
+	{
+		user_name += "@";
+		user_name += json_user["host"].as<const char*>();
+	}
+	String avatar_url = json_user["avatarUrl"];
 
 	String text = _json["text"];
 	String date_time = _json["createdAt"];
@@ -100,14 +118,14 @@ const char* Note::get_username()
 	return _json["user"]["username"].as<const char*>();
 }
 
-void Note::scroll_up(M5Canvas& canvas)
+void Note::scroll_up(HTTPS& https, M5Canvas& canvas)
 {
 	_y += 24;
-	show(canvas);
+	show(https, canvas);
 }
 
-void Note::scroll_down(M5Canvas& canvas)
+void Note::scroll_down(HTTPS& https, M5Canvas& canvas)
 {
 	_y -= 24;
-	show(canvas);
+	show(https, canvas);
 }
