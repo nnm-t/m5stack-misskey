@@ -81,4 +81,25 @@ void NoteState::on_key_pressed(const uint8_t keycode)
 		}
 		return;
 	}
+
+	if (keycode == 0x72)
+	{
+		// r
+		// Reply
+		return;
+	}
+
+	if (keycode == 0x52)
+	{
+		// R
+		// Renote
+		if (_current_note != nullptr)
+		{
+			String renote_id = _current_note->get_id();
+			_misskey.renote(renote_id);
+
+			on_button_b_pressed();
+		}
+		return;
+	}
 }

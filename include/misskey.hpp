@@ -31,6 +31,7 @@ class Misskey
 	const DeserializationError get_note();
 
 	String submit_note();
+	void set_visibility(const NoteVisibility, const bool local_only);
 
 public:
 	Misskey(Settings& settings, HTTPS& https, Header& header) : _settings(settings), _https(https), _header(header), _json_request(StaticJsonDocument<4096>()), _json_response(StaticJsonDocument<16384>())
@@ -39,6 +40,8 @@ public:
 	}
 
 	String create_note(String& text, const NoteVisibility visibility = NoteVisibility::Public, bool local_only = false);
+
+	String renote(String& renote_id);
 
 	Note* get_home_timeline();
 

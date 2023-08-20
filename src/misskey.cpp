@@ -24,13 +24,8 @@ String Misskey::submit_note()
     return _https.post(url, content_type, request);
 }
 
-String Misskey::create_note(String& text, const NoteVisibility visibility, const bool local_only)
+void Misskey::set_visibility(const NoteVisibility visibility, const bool local_only)
 {
-    _json_request.clear();
-
-    _json_request["i"] = _settings.get_api_token();
-    _json_request["text"] = text;
-
     switch (visibility)
     {
         case NoteVisibility::Home:
@@ -45,6 +40,26 @@ String Misskey::create_note(String& text, const NoteVisibility visibility, const
     }
 
     _json_request["localOnly"] = local_only;
+}
+
+String Misskey::create_note(String& text, const NoteVisibility visibility, const bool local_only)
+{
+    _json_request.clear();
+
+    _json_request["i"] = _settings.get_api_token();
+    _json_request["text"] = text;
+
+    set_visibility(visibility, local_only);
+
+    return submit_note();
+}
+
+String Misskey::renote(String& renote_id)
+{
+    _json_request.clear();
+
+    _json_request["i"] = _settings.get_api_token();
+    _json_request["renoteId"] = renote_id;
 
     return submit_note();
 }
