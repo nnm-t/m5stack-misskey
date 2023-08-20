@@ -34,4 +34,6 @@ public:
 	void scroll_down(M5Canvas& canvas);
 
 	const char* get_id();
+
+	const char* get_username();
 };

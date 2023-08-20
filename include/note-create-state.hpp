@@ -1,5 +1,7 @@
 #pragma once
 
+#include <functional>
+
 #include <Arduino.h>
 #include <SD.h>
 
@@ -29,6 +31,8 @@ class NoteCreateState : public IState
 	NoteVisibility _visibility = NoteVisibility::Public;
 	bool _local_only = true;
 
+	Note* _reply_note = nullptr;
+
 	void show();
 
 	void add_kana(const char c);
@@ -38,6 +42,8 @@ class NoteCreateState : public IState
 	void remove_utf8(String& text);
 
 public:
+	std::function<void()> to_note_state = nullptr;
+
 	NoteCreateState(Misskey& misskey, InputMethod& input_method, M5Canvas& canvas) : _misskey(misskey), _input_method(input_method), _canvas(canvas), _text(String()), _text_japanese(String()), _text_japanese_temp(String())
 	{
 
@@ -47,9 +53,13 @@ public:
 
 	void update() override;
 	
+	void on_button_a_pressed() override;
+
 	void on_button_b_pressed() override;
 
 	void on_button_c_pressed() override;
 
 	void on_key_pressed(const uint8_t keycode) override;
+
+	void set_reply_note(Note* note);
 };

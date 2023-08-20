@@ -36,4 +36,8 @@ public:
 	void on_button_c_pressed();
 
 	void on_key_pressed(const uint8_t keycode);
+
+	void to_note_state();
+
+	void to_note_create_state(Note* reply_note = nullptr);
 };

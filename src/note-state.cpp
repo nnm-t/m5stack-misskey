@@ -22,6 +22,10 @@ void NoteState::update()
 
 void NoteState::on_button_a_pressed()
 {
+	if (to_note_create_state != nullptr)
+	{
+		to_note_create_state(nullptr);
+	}
 }
 
 void NoteState::on_button_b_pressed()
@@ -86,6 +90,13 @@ void NoteState::on_key_pressed(const uint8_t keycode)
 	{
 		// r
 		// Reply
+		if (_current_note != nullptr)
+		{
+			if (to_note_create_state != nullptr)
+			{
+				to_note_create_state(_current_note);
+			}
+		}
 		return;
 	}
 

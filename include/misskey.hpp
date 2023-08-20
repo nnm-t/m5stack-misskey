@@ -41,6 +41,8 @@ public:
 
 	String create_note(String& text, const NoteVisibility visibility = NoteVisibility::Public, bool local_only = false);
 
+	String create_reply(String& text, String& reply_id, const NoteVisibility visibility = NoteVisibility::Public, bool local_only = false);
+
 	String renote(String& renote_id);
 
 	Note* get_home_timeline();

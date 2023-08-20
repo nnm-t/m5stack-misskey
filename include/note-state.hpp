@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <functional>
 
 #include <Arduino.h>
 
@@ -23,6 +24,8 @@ class NoteState : public IState
 	void show_current_note();
 
 public:
+	std::function<void(Note*)> to_note_create_state = nullptr;
+
 	NoteState(Misskey& misskey, M5Canvas& canvas) : _misskey(misskey), _canvas(canvas)
 	{
 

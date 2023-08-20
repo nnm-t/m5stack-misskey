@@ -95,6 +95,11 @@ const char* Note::get_id()
 	return _json["id"].as<const char*>();
 }
 
+const char* Note::get_username()
+{
+	return _json["user"]["username"].as<const char*>();
+}
+
 void Note::scroll_up(M5Canvas& canvas)
 {
 	_y += 24;

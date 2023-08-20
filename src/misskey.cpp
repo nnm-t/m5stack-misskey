@@ -54,6 +54,19 @@ String Misskey::create_note(String& text, const NoteVisibility visibility, const
     return submit_note();
 }
 
+String Misskey::create_reply(String& text, String& reply_id, const NoteVisibility visibility, const bool local_only)
+{
+    _json_request.clear();
+
+    _json_request["i"] = _settings.get_api_token();
+    _json_request["text"] = text;
+    _json_request["replyId"] = reply_id;
+
+    set_visibility(visibility, local_only);
+
+    return submit_note();
+}
+
 String Misskey::renote(String& renote_id)
 {
     _json_request.clear();

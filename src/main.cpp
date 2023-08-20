@@ -44,6 +44,9 @@ void setup()
     keyboard.on_key_pressed = [&](const uint8_t keycode){ state_manager.on_key_pressed(keycode); };
     keyboard.begin();
 
+    note_state.to_note_create_state = [&](Note* reply_note) { state_manager.to_note_create_state(reply_note); };
+    note_create_state.to_note_state = [&] { state_manager.to_note_state(); };
+
     M5.Lcd.setFont(&fonts::lgfxJapanGothic_16);
     M5.Lcd.println("Misskey on M5Stack");
 

@@ -3,10 +3,21 @@
 void NoteCreateState::show()
 {
 	_canvas.fillRect(0, 24, 320, 192, background_color);
-	_canvas.setCursor(0, 48);
-	_canvas.setTextColor(foreground_color, background_color);
 	_canvas.setFont(&fonts::lgfxJapanGothic_24);
 
+	if (_reply_note != nullptr)
+	{
+		_canvas.setCursor(0, 24);
+		_canvas.setTextColor(foreground_color, background_color);
+		_canvas.print("to ");
+
+		_canvas.setTextColor(accent_color, background_color);
+		_canvas.print("@");
+		_canvas.print(_reply_note->get_username());
+	}
+
+	_canvas.setTextColor(foreground_color, background_color);
+	_canvas.setCursor(0, 48);
 	_canvas.print(_text);
 
 	if (_is_japanese)
@@ -176,6 +187,14 @@ void NoteCreateState::on_key_pressed(const uint8_t keycode)
 	show();
 }
 
+void NoteCreateState::on_button_a_pressed()
+{
+	if (to_note_state != nullptr)
+	{
+		to_note_state();
+	}
+}
+
 void NoteCreateState::on_button_b_pressed()
 {
 	// 日本語切り替え
@@ -200,7 +219,20 @@ void NoteCreateState::on_button_b_pressed()
 
 void NoteCreateState::on_button_c_pressed()
 {
-	_misskey.create_note(_text, _visibility, _local_only);
+	if (_reply_note == nullptr)
+	{
+		_misskey.create_note(_text, _visibility, _local_only);
+	}
+	else
+	{
+		String reply_id(_reply_note->get_id());
+		_misskey.create_reply(_text, reply_id, _visibility, _local_only);
+	}
+
+	if (to_note_state != nullptr)
+	{
+		to_note_state();
+	}
 }
 
 void NoteCreateState::add_kana(const char c)
@@ -481,4 +513,9 @@ void NoteCreateState::remove_utf8(String& text)
 			break;
 		}
 	}
+}
+
+void NoteCreateState::set_reply_note(Note* note)
+{
+	_reply_note = note;
 }
