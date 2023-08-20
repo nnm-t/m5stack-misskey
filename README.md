@@ -46,6 +46,7 @@ JSON形式で次の内容を記載します。
 {
   "ssid": "Wi-Fi SSID",
   "password": "Wi-Fi パスワード",
+  "host": "接続先のMisskeyサーバーのURL (最後のスラッシュは付けない)",
   "root_ca": "ルートCA証明書 (チェーン) のファイルパス",
   "api_token": "MisskeyのAPIトークン",
   "title": "タイトルに表示する文字列",

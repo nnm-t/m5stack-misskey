@@ -14,7 +14,6 @@
 
 class Misskey
 {
-    static constexpr const char* misskey_host = "https://misskey.io";
     static constexpr const char* misskey_api = "/api";
     static constexpr const char* misskey_api_notes_timeline = "/notes/timeline";
     static constexpr const char* misskey_api_notes_create = "/notes/create";

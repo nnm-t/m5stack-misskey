@@ -52,6 +52,11 @@ const char* Settings::get_root_ca_name()
 	return _json_settings["root_ca"].as<const char*>();
 }
 
+const char* Settings::get_host()
+{
+	return _json_settings["host"].as<const char*>();
+}
+
 const char* Settings::get_api_token()
 {
 	return _json_settings["api_token"].as<const char*>();

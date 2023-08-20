@@ -27,6 +27,8 @@ public:
 
 	const char* get_api_token();
 
+	const char* get_host();
+
 	String& get_root_ca();
 
 	const char* get_title();

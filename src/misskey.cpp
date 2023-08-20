@@ -5,7 +5,7 @@ const DeserializationError Misskey::get_note()
     String request;
     serializeJson(_json_request, request);
 
-    String url = misskey_host + String(misskey_api) + misskey_api_notes_timeline;
+    String url = _settings.get_host() + String(misskey_api) + misskey_api_notes_timeline;
 	String content_type(content_type_json);
     String response = _https.post(url, content_type, request);
 
@@ -19,7 +19,7 @@ String Misskey::submit_note()
     String request;
     serializeJson(_json_request, request);
 
-    String url = misskey_host + String(misskey_api) + misskey_api_notes_create;
+    String url = _settings.get_host() + String(misskey_api) + misskey_api_notes_create;
 	String content_type(content_type_json);
     return _https.post(url, content_type, request);
 }
