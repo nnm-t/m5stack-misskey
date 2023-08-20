@@ -39,6 +39,9 @@ void setup()
     auto config = M5.config();
     M5.begin(config);
 
+    M5.Lcd.setFont(&fonts::lgfxJapanGothic_16);
+    M5.Lcd.println("Misskey on M5Stack");
+
     settings.begin();
 
     keyboard.on_key_pressed = [&](const uint8_t keycode){ state_manager.on_key_pressed(keycode); };
@@ -47,17 +50,14 @@ void setup()
     note_state.to_note_create_state = [&](Note* reply_note) { state_manager.to_note_create_state(reply_note); };
     note_create_state.to_note_state = [&] { state_manager.to_note_state(); };
 
-    M5.Lcd.setFont(&fonts::lgfxJapanGothic_16);
-    M5.Lcd.println("Misskey on M5Stack");
-
-    // JSONからSSID, PASS読み込んでWi-Fi接続
-    WiFi.begin(settings.get_ssid(), settings.get_password());
-
     M5.Lcd.print("Wi-Fi connecting");
     while (WiFi.status() != WL_CONNECTED)
     {
+        // JSONからSSID, PASS読み込んでWi-Fi接続
+        WiFi.begin(settings.get_ssid(), settings.get_password());
+
         M5.Lcd.print(".");
-        delay(500);
+        delay(3000);
     }
 
     M5.Lcd.println("Success");
