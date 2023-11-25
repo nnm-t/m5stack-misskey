@@ -7,7 +7,7 @@ void Note::show_name(M5Canvas& canvas, String& name, String& user_name, const ui
 	canvas.setTextColor(color, background_color);
 	canvas.println(name);
 
-	canvas.setCursor(0, _y + 24);
+	canvas.setCursor(0, _y + 16);
 	canvas.print("@");
 	canvas.println(user_name);
 	canvas.setTextWrap(true);
@@ -15,7 +15,7 @@ void Note::show_name(M5Canvas& canvas, String& name, String& user_name, const ui
 
 void Note::show_text(M5Canvas& canvas, String& text)
 {
-	canvas.setCursor(0, _y + 48);
+	canvas.setCursor(0, _y + 32);
 	canvas.setTextColor(foreground_color, background_color);
 	canvas.println(text);
 }
@@ -41,22 +41,22 @@ void Note::show_visibility(M5Canvas& canvas, String& visibility)
 {
 	if (visibility == "home")
 	{
-		canvas.drawBmpFile(SD, "/home.bmp", 296, _y + 24);
+		canvas.drawBmpFile(SD, "/home_16.bmp", 224, _y + 16);
 		return;
 	}
 
 	if (visibility == "followers")
 	{
-		canvas.drawBmpFile(SD, "/followers.bmp", 296, _y + 24);
+		canvas.drawBmpFile(SD, "/followers_16.bmp", 224, _y + 16);
 		return;
 	}
 }
 
 void Note::show(HTTPS& https, M5Canvas& canvas)
 {
-	canvas.fillRect(0, 24, 320, 192, background_color);
+	canvas.fillRect(0, 16, 240, 103, background_color);
 	canvas.setCursor(0, _y);
-	canvas.setFont(&fonts::lgfxJapanGothic_24);
+	canvas.setFont(&fonts::lgfxJapanGothic_16);
 
 	if (_json.containsKey("renote"))
 	{
@@ -120,12 +120,12 @@ const char* Note::get_username()
 
 void Note::scroll_up(HTTPS& https, M5Canvas& canvas)
 {
-	_y += 24;
+	_y += 16;
 	show(https, canvas);
 }
 
 void Note::scroll_down(HTTPS& https, M5Canvas& canvas)
 {
-	_y -= 24;
+	_y -= 16;
 	show(https, canvas);
 }

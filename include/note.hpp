@@ -15,7 +15,7 @@ class Note
 {
 	JsonVariant _json;
 
-	int32_t _y = 24;
+	int32_t _y = 16;
 
 	void show_name(M5Canvas& canvas, String& name, String& user_name, const uint32_t color);
 	void show_text(M5Canvas& canvas, String& text);
