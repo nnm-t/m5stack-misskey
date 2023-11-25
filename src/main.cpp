@@ -70,8 +70,7 @@ void setup()
 
     M5.Lcd.clear();
 
-    canvas.setPsram(true);
-    canvas.createSprite(320, 240);
+    canvas.createSprite(240, 135);
 
     state_manager.begin();
 }
