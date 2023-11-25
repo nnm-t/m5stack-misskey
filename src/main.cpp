@@ -38,6 +38,7 @@ void setup()
 {
     auto config = M5.config();
     M5.begin(config);
+    Serial.begin(115200);
 
     M5.Lcd.setRotation(1);
     M5.Lcd.setFont(&fonts::lgfxJapanGothic_16);

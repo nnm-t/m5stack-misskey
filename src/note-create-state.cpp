@@ -78,9 +78,9 @@ void NoteCreateState::update()
 
 void NoteCreateState::on_key_pressed(const uint8_t keycode)
 {
-	if (keycode == 0xAF)
+	if (keycode == 0xA9)
 	{
-		// Alt + 0
+		// Fn + V
 		// Visibility
 		switch (_visibility)
 		{
@@ -97,7 +97,7 @@ void NoteCreateState::on_key_pressed(const uint8_t keycode)
 	}
 	else if (keycode == 0x9D)
 	{
-		// Alt + F
+		// Fn + F
 		// Federate
 		_local_only = !_local_only;
 	}
@@ -185,6 +185,27 @@ void NoteCreateState::on_key_pressed(const uint8_t keycode)
 	}
 
 	show();
+
+	if (keycode == 0x91)
+	{
+		// Fn + 1
+		on_button_a_pressed();
+		return;
+	}
+
+	if (keycode == 0x92)
+	{
+		// Fn + 2
+		on_button_b_pressed();
+		return;
+	}
+
+	if (keycode == 0x93)
+	{
+		// Fn + 3
+		on_button_c_pressed();
+		return;
+	}
 }
 
 void NoteCreateState::on_button_a_pressed()

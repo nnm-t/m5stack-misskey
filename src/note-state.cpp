@@ -42,9 +42,9 @@ void NoteState::on_button_c_pressed()
 
 void NoteState::on_key_pressed(const uint8_t keycode)
 {
-	if (keycode == 0x6E)
+	if (keycode == ',')
 	{
-		// n (左)
+		// , (左)
 		Note* const next_note = _misskey.get_after_note(_current_note);
 		delete _current_note;
 		_current_note = next_note;
@@ -53,9 +53,9 @@ void NoteState::on_key_pressed(const uint8_t keycode)
 		return;
 	}
 
-	if (keycode == 0x24)
+	if (keycode == '/')
 	{
-		// $ (右)
+		// / (右)
 		Note* const next_note = _misskey.get_before_note(_current_note);
 		delete _current_note;
 		_current_note = next_note;
@@ -64,9 +64,9 @@ void NoteState::on_key_pressed(const uint8_t keycode)
 		return;
 	}
 
-	if (keycode == 0x6B)
+	if (keycode == ';')
 	{
-		// k (上)
+		// ; (上)
 		if (_current_note != nullptr)
 		{
 			_current_note->scroll_up(_https, _canvas);
@@ -75,9 +75,9 @@ void NoteState::on_key_pressed(const uint8_t keycode)
 		return;
 	}
 
-	if (keycode == 0x6D)
+	if (keycode == '.')
 	{
-		// m (下)
+		// . (下)
 		if (_current_note != nullptr)
 		{
 			_current_note->scroll_down(_https, _canvas);
@@ -111,6 +111,27 @@ void NoteState::on_key_pressed(const uint8_t keycode)
 
 			on_button_b_pressed();
 		}
+		return;
+	}
+
+	if (keycode == 0x91)
+	{
+		// Fn + 1
+		on_button_a_pressed();
+		return;
+	}
+
+	if (keycode == 0x92)
+	{
+		// Fn + 2
+		on_button_b_pressed();
+		return;
+	}
+
+	if (keycode == 0x93)
+	{
+		// Fn + 3
+		on_button_c_pressed();
 		return;
 	}
 }
