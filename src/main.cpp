@@ -11,7 +11,7 @@
 #include "note.hpp"
 #include "misskey.hpp"
 #include "input-method.hpp"
-#include "faces-keyboard.hpp"
+#include "cardputer-keyboard.hpp"
 #include "note-state.hpp"
 #include "note-create-state.hpp"
 #include "state-manager.hpp"
@@ -27,7 +27,7 @@ namespace {
     Misskey misskey(settings, https, header);
     InputMethod input_method(https);
 
-    FacesKeyboard keyboard;
+    CardputerKeyboard keyboard;
 
     NoteState note_state(misskey, https, canvas);
     NoteCreateState note_create_state(misskey, input_method, canvas);
@@ -39,6 +39,7 @@ void setup()
     auto config = M5.config();
     M5.begin(config);
 
+    M5.Lcd.setRotation(1);
     M5.Lcd.setFont(&fonts::lgfxJapanGothic_16);
     M5.Lcd.println("Misskey on M5Stack");
 

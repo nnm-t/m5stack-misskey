@@ -7,12 +7,8 @@
 
 #include <M5Unified.hpp>
 
-class FacesKeyboard
+class CardputerKeyboard
 {
-	static constexpr const uint8_t i2c_address = 0x08;
-
-	TwoWire* _wire = nullptr;
-	uint8_t _interrupt_pin = 0;
 
 public:
 	std::function<void(const uint8_t)> on_key_pressed = nullptr;

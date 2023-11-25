@@ -19,7 +19,7 @@ public:
 
 	}
 
-	void begin(const uint8_t sd_pin = 4);
+	void begin(const uint8_t sd_pin = 12);
 
 	const char* get_ssid();
 
