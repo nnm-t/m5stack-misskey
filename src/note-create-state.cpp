@@ -2,12 +2,12 @@
 
 void NoteCreateState::show()
 {
-	_canvas.fillRect(0, 24, 320, 192, background_color);
-	_canvas.setFont(&fonts::lgfxJapanGothic_24);
+	_canvas.fillRect(0, 16, 240, 119, background_color);
+	_canvas.setFont(&fonts::lgfxJapanGothic_16);
 
 	if (_reply_note != nullptr)
 	{
-		_canvas.setCursor(0, 24);
+		_canvas.setCursor(0, 16);
 		_canvas.setTextColor(foreground_color, background_color);
 		_canvas.print("to ");
 
@@ -17,16 +17,16 @@ void NoteCreateState::show()
 	}
 
 	_canvas.setTextColor(foreground_color, background_color);
-	_canvas.setCursor(0, 48);
+	_canvas.setCursor(0, 32);
 	_canvas.print(_text);
 
 	if (_is_japanese)
 	{
 		// 日本語入力モード
-		_canvas.fillRect(0, 192, 320, 24, foreground_color);
+		_canvas.fillRect(0, 103, 240, 16, foreground_color);
 		_canvas.setTextColor(background_color, foreground_color);
 
-		_canvas.setCursor(0, 192);
+		_canvas.setCursor(0, 103);
 		_canvas.print(_text_japanese);
 		_canvas.print(_text_japanese_temp);
 
@@ -37,23 +37,23 @@ void NoteCreateState::show()
 	switch (_visibility)
 	{
 		case NoteVisibility::Public:
-			_canvas.drawBmpFile(SD, "/public.bmp", 272, 24);
+			_canvas.drawBmpFile(SD, "/public_16.bmp", 208, 16);
 			break;
 		case NoteVisibility::Home:
-			_canvas.drawBmpFile(SD, "/home.bmp", 272, 24);
+			_canvas.drawBmpFile(SD, "/home_16.bmp", 208, 16);
 			break;
 		case NoteVisibility::Followers:
-			_canvas.drawBmpFile(SD, "/followers.bmp", 272, 24);
+			_canvas.drawBmpFile(SD, "/followers_16.bmp", 208, 16);
 			break;
 	}
 
 	if (!_local_only)
 	{
-		_canvas.drawBmpFile(SD, "/federate.bmp", 296, 24);
+		_canvas.drawBmpFile(SD, "/federate_16.bmp", 224, 16);
 	}
 	else
 	{
-		_canvas.drawBmpFile(SD, "/de_federate.bmp", 296, 24);
+		_canvas.drawBmpFile(SD, "/de_federate_16.bmp", 224, 16);
 	}
 
 	_footer.show(_canvas);
@@ -61,7 +61,7 @@ void NoteCreateState::show()
 
 void NoteCreateState::begin()
 {
-	_canvas.fillRect(0, 24, 320, 216, background_color);
+	_canvas.fillRect(0, 16, 240, 119, background_color);
 
 	_visibility = NoteVisibility::Public;
 	_local_only = true;
